@@ -23,36 +23,35 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void ProcessMain()
         {
-            if (!int.TryParse(Console.ReadLine(), out int option))
+            if (!Enum.TryParse(Console.ReadLine(), true, out enumMenuMain optionMain))
             {
                 return;
             }
 
-            switch (option)
+            switch (optionMain)
             {
-                case (int)enumMenuMain.Maintenance:
+                case enumMenuMain.Maintenance:
                     MenuMaintenance();
 
-                    if (!int.TryParse(Console.ReadLine(), out option))
+                    if (!Enum.TryParse(Console.ReadLine(), true, out enumMenuMaintenance optionMaintenance))
                     {
                         return;
                     }
 
-                    switch (option)
+                    switch (optionMaintenance)
                     {
-                        case (int)enumMenuMaintenance.Customers:
+                        case enumMenuMaintenance.Customers:
                             RegistryCustomer();
                             break;
-                        case (int)enumMenuMaintenance.Products:
+                        case enumMenuMaintenance.Products:
                             RegistryProduct();
                             break;
-                        case (int)enumMenuMaintenance.Sellers:
+                        case enumMenuMaintenance.Sellers:
                             RegistrySeller();
                             break;
-                        case (int)enumMenuMaintenance.MenuPrincipal:
+                        case enumMenuMaintenance.MenuPrincipal:
                             MenuMain();
                             ProcessMain();
                             break;
@@ -64,29 +63,29 @@ namespace VisualCode
                     }
 
                     break;
-                case (int)enumMenuMain.RegistrySales:
+                case enumMenuMain.RegistrySales:
                     RegistryInvoice();
                     break;
-                case (int)enumMenuMain.Reports:
+                case enumMenuMain.Reports:
                     MenuReport();
 
-                    if (!int.TryParse(Console.ReadLine(), out option))
+                    if (!Enum.TryParse(Console.ReadLine(), true, out enumMenuReport optionReport))
                     {
                         return;
                     }
 
-                    switch (option)
+                    switch (optionReport)
                     {
-                        case (int)enumMenuReport.Sales:
+                        case enumMenuReport.Sales:
                             ReportSales();
                             break;
-                        case (int)enumMenuReport.CustomersAge:
+                        case enumMenuReport.CustomersAge:
                             ReportCustomersAge();
                             break;
-                        case (int)enumMenuReport.CustomersBirthdayMonth:
+                        case enumMenuReport.CustomersBirthdayMonth:
                             ReportCustomersBirthay();
                             break;
-                        case (int)enumMenuReport.ProductsStock:
+                        case enumMenuReport.ProductsStock:
                             ReportProductStock();
                             break;
                         default:
@@ -103,14 +102,12 @@ namespace VisualCode
                     break;
             }
         }
-
         private static void MenuMain()
         {
             Console.WriteLine("1. Mantenimiento");
             Console.WriteLine("2. Registro de Venta");
             Console.WriteLine("3. Reportes");
         }
-
         private static void MenuMaintenance()
         {
             Console.WriteLine("1. Cliente");
@@ -118,7 +115,6 @@ namespace VisualCode
             Console.WriteLine("3. Vendedor");
             Console.WriteLine("9. Menu Principal");
         }
-
         private static void MenuReport()
         {
             Console.WriteLine("1. Ventas");
@@ -126,7 +122,6 @@ namespace VisualCode
             Console.WriteLine("3. Clientes cumplan este mes");
             Console.WriteLine("4. Productos por debajo stock");
         }
-
         private static void RegistryCustomer()
         {
             Console.WriteLine("Codigo Cliente: ");
@@ -150,7 +145,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void RegistryProduct()
         {
             Console.WriteLine("Codigo Producto: ");
@@ -184,7 +178,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void RegistrySeller()
         {
             Console.WriteLine("Codigo Vendedor: ");
@@ -205,7 +198,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void RegistryInvoice()
         {
             Console.WriteLine("Codigo Cliente: ");
@@ -283,7 +275,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void ReportSales()
         {
             decimal TotalAmount = 0;
@@ -303,7 +294,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void ReportCustomersAge()
         {
             Console.WriteLine("Clientes mayores a 55");
@@ -319,7 +309,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void ReportCustomersBirthay()
         {
             List<Customers> objCustomersList = new List<Customers>();
@@ -335,7 +324,6 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static void ReportProductStock()
         {
             List<Products> objProductsList = new List<Products>();
@@ -351,13 +339,11 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
-
         private static string ConfirmationAddDetails()
         {
             Console.WriteLine("Desea agregar detalle de la factura?: (y/n)");
             return Console.ReadLine();
         }
-
         private static void LoadDataDefault()
         {
             Customers customers = new Customers();
@@ -411,7 +397,6 @@ namespace VisualCode
             sellers.Name = "Vendedor A";
             sellersList.Add(sellers);
         }
-
         private static void PrintData(object item)
         {
             Console.WriteLine($"{item.ToString()}");
