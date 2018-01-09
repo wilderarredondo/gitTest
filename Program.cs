@@ -20,7 +20,6 @@ namespace VisualCode
         static void Main(string[] args)
         {
             LoadDataDefault();
-
             MenuMain();
             ProcessMain();
         }
@@ -146,7 +145,6 @@ namespace VisualCode
             customers.IdCustomer = idCustomer;
             customers.Name = nameCustomer;
             customers.BirthDate = birthDateCustomer;
-
             customersList.Add(customers);
 
             MenuMain();
@@ -181,7 +179,6 @@ namespace VisualCode
             products.Description = description;
             products.Price = price;
             products.Stock = stock;
-
             productsList.Add(products);
 
             MenuMain();
@@ -218,7 +215,6 @@ namespace VisualCode
             }
 
             Customers objCustomers = customersList.SingleOrDefault(cliente => cliente.IdCustomer == idCustomer);
-
             Console.WriteLine($"Cliente Seleccionado: {objCustomers.Name} , Fecha de Nacimiento: {objCustomers.BirthDate}");
 
             Console.WriteLine("Codigo Vendedor: ");
@@ -228,12 +224,10 @@ namespace VisualCode
             }
 
             Sellers objSellers = sellersList.SingleOrDefault(vendedor => vendedor.IdSeller == idSeller);
-
             Console.WriteLine($"Vendedor Seleccionado: {objSellers.Name}");
 
             //get the last ID
             int maxIdInvoice = 1;
-
             if (invoicesList.Count > 0) //Another method
             {
                 maxIdInvoice = invoicesList.Max(c => c.IdInvoice) + 1;
@@ -260,7 +254,6 @@ namespace VisualCode
                 }
 
                 Products objProducts = productsList.SingleOrDefault(producto => producto.IdProduct == idProduct);
-
                 PrintData(objProducts);
 
                 Console.WriteLine("Cantidad: ");
@@ -313,10 +306,10 @@ namespace VisualCode
 
         private static void ReportCustomersAge()
         {
+            Console.WriteLine("Clientes mayores a 55");
+
             List<Customers> objCustomersList = new List<Customers>();
             objCustomersList = customersList.Where(c => DateTime.Today.Year - Convert.ToDateTime(c.BirthDate).Year > 55).ToList();
-
-            Console.WriteLine("Clientes mayores a 55");
 
             foreach(Customers customers in objCustomersList)
             {
