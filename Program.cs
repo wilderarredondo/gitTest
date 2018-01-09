@@ -56,7 +56,7 @@ namespace VisualCode
                             ProcessMain();
                             break;
                         default:
-                            Console.WriteLine("Ingrese una opcion correcta");
+                            Console.WriteLine("Enter a correct option");
                             MenuMain();
                             ProcessMain();
                             break;
@@ -89,14 +89,14 @@ namespace VisualCode
                             ReportProductStock();
                             break;
                         default:
-                            Console.WriteLine("Ingrese una opcion correcta");
+                            Console.WriteLine("Enter a correct option");
                             MenuMain();
                             ProcessMain();
                             break;
                     }
                     break;
                 default:
-                    Console.WriteLine("Ingrese una opcion correcta");
+                    Console.WriteLine("Enter a correct option");
                     MenuMain();
                     ProcessMain();
                     break;
@@ -104,36 +104,36 @@ namespace VisualCode
         }
         private static void MenuMain()
         {
-            Console.WriteLine("1. Mantenimiento");
-            Console.WriteLine("2. Registro de Venta");
-            Console.WriteLine("3. Reportes");
+            Console.WriteLine("1. Maintenance");
+            Console.WriteLine("2. Registration of Sale");
+            Console.WriteLine("3. Reports");
         }
         private static void MenuMaintenance()
         {
-            Console.WriteLine("1. Cliente");
-            Console.WriteLine("2. Producto");
-            Console.WriteLine("3. Vendedor");
-            Console.WriteLine("9. Menu Principal");
+            Console.WriteLine("1. Customer");
+            Console.WriteLine("2. Product");
+            Console.WriteLine("3. Seller");
+            Console.WriteLine("9. Main Menu");
         }
         private static void MenuReport()
         {
-            Console.WriteLine("1. Ventas");
-            Console.WriteLine("2. Clientes mayores 55");
-            Console.WriteLine("3. Clientes cumplan este mes");
-            Console.WriteLine("4. Productos por debajo stock");
+            Console.WriteLine("1. Sales");
+            Console.WriteLine("2. Senior customers 55");
+            Console.WriteLine("3. Customers meet this month");
+            Console.WriteLine("4. Products below stock");
         }
         private static void RegistryCustomer()
         {
-            Console.WriteLine("Codigo Cliente: ");
+            Console.WriteLine("Id Customer: ");
             if (!int.TryParse(Console.ReadLine(), out int idCustomer))
             {
                 return;
             }
 
-            Console.WriteLine("Nombre: ");
+            Console.WriteLine("Name: ");
             string nameCustomer = Console.ReadLine();
 
-            Console.WriteLine("Fecha de Nacimiento (MM/dd/yyyy): ");
+            Console.WriteLine("BirthDate (MM/dd/yyyy): ");
             string birthDateCustomer = Console.ReadLine();
 
             Customers customers = new Customers();
@@ -147,16 +147,16 @@ namespace VisualCode
         }
         private static void RegistryProduct()
         {
-            Console.WriteLine("Codigo Producto: ");
+            Console.WriteLine("Id Product: ");
             if (!int.TryParse(Console.ReadLine(), out int idProduct))
             {
                 return;
             }
 
-            Console.WriteLine("Descripcion: ");
+            Console.WriteLine("Description: ");
             string description = Console.ReadLine();
 
-            Console.WriteLine("Precio: ");
+            Console.WriteLine("Price: ");
             if (!decimal.TryParse(Console.ReadLine(), out decimal price))
             {
                 return;
@@ -180,13 +180,13 @@ namespace VisualCode
         }
         private static void RegistrySeller()
         {
-            Console.WriteLine("Codigo Vendedor: ");
+            Console.WriteLine("Id Seller: ");
             if (!int.TryParse(Console.ReadLine(), out int idSeller))
             {
                 return;
             }
 
-            Console.WriteLine("Nombre: ");
+            Console.WriteLine("Name: ");
             string name = Console.ReadLine();
 
             Sellers sellers = new Sellers();
@@ -200,23 +200,23 @@ namespace VisualCode
         }
         private static void RegistryInvoice()
         {
-            Console.WriteLine("Codigo Cliente: ");
+            Console.WriteLine("Id Customer: ");
             if (!int.TryParse(Console.ReadLine(), out int idCustomer))
             {
                 return;
             }
 
             Customers objCustomers = customersList.SingleOrDefault(cliente => cliente.IdCustomer == idCustomer);
-            Console.WriteLine($"Cliente Seleccionado: {objCustomers.Name} , Fecha de Nacimiento: {objCustomers.BirthDate}");
+            PrintData(objCustomers);
 
-            Console.WriteLine("Codigo Vendedor: ");
+            Console.WriteLine("Id Seller: ");
             if (!int.TryParse(Console.ReadLine(), out int idSeller))
             {
                 return;
             }
 
             Sellers objSellers = sellersList.SingleOrDefault(vendedor => vendedor.IdSeller == idSeller);
-            Console.WriteLine($"Vendedor Seleccionado: {objSellers.Name}");
+            PrintData(objSellers);
 
             //get the last ID
             int maxIdInvoice = 1;
@@ -239,7 +239,7 @@ namespace VisualCode
 
             while (optionSelected == "y")
             {
-                Console.WriteLine("Codigo Producto: ");
+                Console.WriteLine("Id Product: ");
                 if (!int.TryParse(Console.ReadLine(), out int idProduct))
                 {
                     return;
@@ -248,7 +248,7 @@ namespace VisualCode
                 Products objProducts = productsList.SingleOrDefault(producto => producto.IdProduct == idProduct);
                 PrintData(objProducts);
 
-                Console.WriteLine("Cantidad: ");
+                Console.WriteLine("Quantity: ");
                 if (!int.TryParse(Console.ReadLine(), out int quantity))
                 {
                     return;
@@ -279,31 +279,31 @@ namespace VisualCode
         {
             decimal TotalAmount = 0;
 
-            Console.WriteLine("Registro de Ventas");
+            Console.WriteLine("Sales Record");
 
             invoicesList.ForEach(itemInvoices => {
                 TotalAmount = TotalAmount + itemInvoices.Amount;
                 itemInvoices.InvoiceDetails.ForEach(itemInvoiceDetails =>
                 {
-                        Console.WriteLine($"Id Factura: {itemInvoices.IdInvoice}  Id Factura Detalle: {itemInvoiceDetails.IdInvoiceDetail} Producto: {itemInvoiceDetails.Products.Description}   Cliente: {itemInvoices.Customers.Name} Precio: {itemInvoiceDetails.Price}    Cantidad: {itemInvoiceDetails.Quantity} Total: {itemInvoiceDetails.Price * itemInvoiceDetails.Quantity}");
+                        Console.WriteLine($"Id Invoice: {itemInvoices.IdInvoice}  Id Invoice Detalle: {itemInvoiceDetails.IdInvoiceDetail} Product: {itemInvoiceDetails.Products.Description}   Customer: {itemInvoices.Customers.Name} Price: {itemInvoiceDetails.Price}    Quantity: {itemInvoiceDetails.Quantity} Total: {itemInvoiceDetails.Price * itemInvoiceDetails.Quantity}");
                 });
             });
 
-            Console.WriteLine($"Total General: {TotalAmount}");
+            Console.WriteLine($"Grand Total: {TotalAmount}");
 
             MenuMain();
             ProcessMain();
         }
         private static void ReportCustomersAge()
         {
-            Console.WriteLine("Clientes mayores a 55");
+            Console.WriteLine("Customers over 55");
 
             List<Customers> objCustomersList = new List<Customers>();
             objCustomersList = customersList.Where(c => DateTime.Today.Year - Convert.ToDateTime(c.BirthDate).Year > 55).ToList();
 
             foreach(Customers customers in objCustomersList)
             {
-                Console.WriteLine($"Codigo Cliente: {customers.IdCustomer}  Nombre: {customers.Name}  Fecha Nacimiento: {customers.BirthDate}");
+                Console.WriteLine($"Id Customer: {customers.IdCustomer}  Name: {customers.Name}  Birth Date: {customers.BirthDate}");
             }
 
             MenuMain();
@@ -311,14 +311,14 @@ namespace VisualCode
         }
         private static void ReportCustomersBirthay()
         {
-            List<Customers> objCustomersList = new List<Customers>();
+            List<Customers> objCustomersList = null;
             objCustomersList = customersList.Where(c => DateTime.Today.Month == Convert.ToDateTime(c.BirthDate).Month).ToList();
 
-            Console.WriteLine("Clientes cumplen este mes");
+            Console.WriteLine("Customers meet this month");
 
             foreach(Customers customers in objCustomersList)
             {
-                Console.WriteLine($"Codigo Cliente: {customers.IdCustomer}  Nombre: {customers.Name}  Fecha Nacimiento: {customers.BirthDate}");
+                Console.WriteLine($"Id Customer: {customers.IdCustomer}  Name: {customers.Name}  Birth Date: {customers.BirthDate}");
             }
 
             MenuMain();
@@ -326,14 +326,14 @@ namespace VisualCode
         }
         private static void ReportProductStock()
         {
-            List<Products> objProductsList = new List<Products>();
+            List<Products> objProductsList = null;
             objProductsList = productsList.Where(c => c.Stock <= 5).ToList();
 
-            Console.WriteLine("Productos con stock minimo");
+            Console.WriteLine("Products with minimum stock");
 
             foreach(Products products in objProductsList)
             {
-                Console.WriteLine($"Codigo Producto: {products.IdProduct}  Descripcion: {products.Description}  Precio: {products.Price} Stock: {products.Stock}");
+                Console.WriteLine($"Id Product: {products.IdProduct}  Description: {products.Description}  Price: {products.Price} Stock: {products.Stock}");
             }
 
             MenuMain();
@@ -341,7 +341,7 @@ namespace VisualCode
         }
         private static string ConfirmationAddDetails()
         {
-            Console.WriteLine("Desea agregar detalle de la factura?: (y/n)");
+            Console.WriteLine("You want to add detail of the invoice?: (y/n)");
             return Console.ReadLine();
         }
         private static void LoadDataDefault()
@@ -366,35 +366,35 @@ namespace VisualCode
 
             Products products = new Products();
             products.IdProduct = 1;
-            products.Description = "Producto A";
+            products.Description = "Product A";
             products.Price = 10;
             products.Stock = 20;
             productsList.Add(products);
 
             products = new Products();
             products.IdProduct = 2;
-            products.Description = "Producto B";
+            products.Description = "Product B";
             products.Price = 20;
             products.Stock = 40;
             productsList.Add(products);
 
             products = new Products();
             products.IdProduct = 3;
-            products.Description = "Producto C";
+            products.Description = "Product C";
             products.Price = 30;
             products.Stock = 5;
             productsList.Add(products);
 
             products = new Products();
             products.IdProduct = 4;
-            products.Description = "Producto D";
+            products.Description = "Product D";
             products.Price = 40;
             products.Stock = 3;
             productsList.Add(products);
 
             Sellers sellers = new Sellers();
             sellers.IdSeller = 1;
-            sellers.Name = "Vendedor A";
+            sellers.Name = "Seller A";
             sellersList.Add(sellers);
         }
         private static void PrintData(object item)

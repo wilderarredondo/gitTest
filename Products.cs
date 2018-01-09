@@ -9,7 +9,7 @@ namespace VisualCode.Entities
 
         public override string ToString()
         {
-            return $"{nameof(this.Description)}: {this.Description}: {this.Description} {this.Price}";
+            return $"{nameof(this.Description)}: {this.Description}     {nameof(this.Price)} {this.Price}";
         }
     }
 }
