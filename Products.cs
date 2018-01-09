@@ -1,6 +1,6 @@
 namespace VisualCode.Entities
 {
-    public class Product
+    public class Products
     {
         public int IdProduct { get; set; }
         public string Description { get; set; }
