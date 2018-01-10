@@ -5,53 +5,75 @@ using VisualCode.Entities;
 
 namespace VisualCode
 {
+    public enum EnumMenuMain : int
+    {
+        Maintenance = 1,
+        RegistrySales = 2,
+        Reports = 3
+    };
+
+    public enum EnumMenuMaintenance : int
+    {
+        Customers = 1,
+        Products = 2,
+        Sellers = 3,
+        MenuPrincipal = 4
+    };
+
+    public enum EnumMenuReport : int
+    {
+        Sales = 1,
+        CustomersAge = 2,
+        CustomersBirthdayMonth = 3,
+        ProductsStock = 4
+    };
+
     class Program
     {
-        enum enumMenuMain : int {Maintenance = 1, RegistrySales = 2, Reports = 3};
-        enum enumMenuMaintenance : int {Customers = 1, Products = 2, Sellers = 3, MenuPrincipal = 4};
-        enum enumMenuReport : int {Sales = 1, CustomersAge = 2, CustomersBirthdayMonth = 3, ProductsStock = 4};
-
-        static List<Customers> customersList = new List<Customers>();
-        static List<Products> productsList = new List<Products>();
-        static List<Sellers> sellersList = new List<Sellers>();
-        static List<Invoices> invoicesList = new List<Invoices>();
-        static List<InvoiceDetails> invoiceDetailsList = new List<InvoiceDetails>();
+        private static List<Customers> customersList = new List<Customers>();
+        private static List<Products> productsList = new List<Products>();
+        private static List<Sellers> sellersList = new List<Sellers>();
+        private static List<Invoices> invoicesList = new List<Invoices>();
+        private static List<InvoiceDetails> invoiceDetailsList = new List<InvoiceDetails>();
 
         static void Main(string[] args)
         {
             LoadDataDefault();
+
             MenuMain();
+
             ProcessMain();
         }
+
         private static void ProcessMain()
         {
-            if (!Enum.TryParse(Console.ReadLine(), true, out enumMenuMain optionMain))
+            if (!Enum.TryParse(Console.ReadLine(), true, out EnumMenuMain optionMain))
             {
                 return;
             }
 
             switch (optionMain)
             {
-                case enumMenuMain.Maintenance:
+                case EnumMenuMain.Maintenance:
                     MenuMaintenance();
 
-                    if (!Enum.TryParse(Console.ReadLine(), true, out enumMenuMaintenance optionMaintenance))
+                    if (!Enum.TryParse(Console.ReadLine(), true, out EnumMenuMaintenance optionMaintenance))
                     {
                         return;
                     }
 
                     switch (optionMaintenance)
                     {
-                        case enumMenuMaintenance.Customers:
+                        case EnumMenuMaintenance.Customers:
                             RegistryCustomer();
                             break;
-                        case enumMenuMaintenance.Products:
+                        case EnumMenuMaintenance.Products:
                             RegistryProduct();
                             break;
-                        case enumMenuMaintenance.Sellers:
+                        case EnumMenuMaintenance.Sellers:
                             RegistrySeller();
                             break;
-                        case enumMenuMaintenance.MenuPrincipal:
+                        case EnumMenuMaintenance.MenuPrincipal:
                             MenuMain();
                             ProcessMain();
                             break;
@@ -63,29 +85,29 @@ namespace VisualCode
                     }
 
                     break;
-                case enumMenuMain.RegistrySales:
+                case EnumMenuMain.RegistrySales:
                     RegistryInvoice();
                     break;
-                case enumMenuMain.Reports:
+                case EnumMenuMain.Reports:
                     MenuReport();
 
-                    if (!Enum.TryParse(Console.ReadLine(), true, out enumMenuReport optionReport))
+                    if (!Enum.TryParse(Console.ReadLine(), true, out EnumMenuReport optionReport))
                     {
                         return;
                     }
 
                     switch (optionReport)
                     {
-                        case enumMenuReport.Sales:
+                        case EnumMenuReport.Sales:
                             ReportSales();
                             break;
-                        case enumMenuReport.CustomersAge:
+                        case EnumMenuReport.CustomersAge:
                             ReportCustomersAge();
                             break;
-                        case enumMenuReport.CustomersBirthdayMonth:
+                        case EnumMenuReport.CustomersBirthdayMonth:
                             ReportCustomersBirthay();
                             break;
-                        case enumMenuReport.ProductsStock:
+                        case EnumMenuReport.ProductsStock:
                             ReportProductStock();
                             break;
                         default:
@@ -102,12 +124,14 @@ namespace VisualCode
                     break;
             }
         }
+
         private static void MenuMain()
         {
             Console.WriteLine("1. Maintenance");
             Console.WriteLine("2. Registration of Sale");
             Console.WriteLine("3. Reports");
         }
+
         private static void MenuMaintenance()
         {
             Console.WriteLine("1. Customer");
@@ -115,6 +139,7 @@ namespace VisualCode
             Console.WriteLine("3. Seller");
             Console.WriteLine("9. Main Menu");
         }
+
         private static void MenuReport()
         {
             Console.WriteLine("1. Sales");
@@ -122,6 +147,7 @@ namespace VisualCode
             Console.WriteLine("3. Customers meet this month");
             Console.WriteLine("4. Products below stock");
         }
+
         private static void RegistryCustomer()
         {
             Console.WriteLine("Id Customer: ");
@@ -145,6 +171,7 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
+
         private static void RegistryProduct()
         {
             Console.WriteLine("Id Product: ");
@@ -178,6 +205,7 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
+
         private static void RegistrySeller()
         {
             Console.WriteLine("Id Seller: ");
@@ -198,6 +226,7 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
+
         private static void RegistryInvoice()
         {
             Console.WriteLine("Id Customer: ");
@@ -221,9 +250,7 @@ namespace VisualCode
             //get the last ID
             int maxIdInvoice = 1;
             if (invoicesList.Count > 0) //Another method
-            {
                 maxIdInvoice = invoicesList.Max(c => c.IdInvoice) + 1;
-            }
 
             //The header is recorded
             Invoices invoices = new Invoices();
@@ -275,6 +302,7 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
+
         private static void ReportSales()
         {
             decimal TotalAmount = 0;
@@ -283,9 +311,12 @@ namespace VisualCode
 
             invoicesList.ForEach(itemInvoices => {
                 TotalAmount = TotalAmount + itemInvoices.Amount;
+
+                PrintReportInvoices(itemInvoices);
+
                 itemInvoices.InvoiceDetails.ForEach(itemInvoiceDetails =>
                 {
-                        Console.WriteLine($"Id Invoice: {itemInvoices.IdInvoice}  Id Invoice Detalle: {itemInvoiceDetails.IdInvoiceDetail} Product: {itemInvoiceDetails.Products.Description}   Customer: {itemInvoices.Customers.Name} Price: {itemInvoiceDetails.Price}    Quantity: {itemInvoiceDetails.Quantity} Total: {itemInvoiceDetails.Price * itemInvoiceDetails.Quantity}");
+                    PrintReportInvoiceDetails(itemInvoiceDetails);
                 });
             });
 
@@ -294,6 +325,7 @@ namespace VisualCode
             MenuMain();
             ProcessMain();
         }
+
         private static void ReportCustomersAge()
         {
             Console.WriteLine("Customers over 55");
@@ -303,12 +335,13 @@ namespace VisualCode
 
             foreach(Customers customers in objCustomersList)
             {
-                Console.WriteLine($"Id Customer: {customers.IdCustomer}  Name: {customers.Name}  Birth Date: {customers.BirthDate}");
+                PrintReportCustomers(customers);
             }
 
             MenuMain();
             ProcessMain();
         }
+
         private static void ReportCustomersBirthay()
         {
             List<Customers> objCustomersList = null;
@@ -318,12 +351,13 @@ namespace VisualCode
 
             foreach(Customers customers in objCustomersList)
             {
-                Console.WriteLine($"Id Customer: {customers.IdCustomer}  Name: {customers.Name}  Birth Date: {customers.BirthDate}");
+                PrintReportCustomers(customers);
             }
 
             MenuMain();
             ProcessMain();
         }
+
         private static void ReportProductStock()
         {
             List<Products> objProductsList = null;
@@ -333,17 +367,44 @@ namespace VisualCode
 
             foreach(Products products in objProductsList)
             {
-                Console.WriteLine($"Id Product: {products.IdProduct}  Description: {products.Description}  Price: {products.Price} Stock: {products.Stock}");
+                PrintReportProducts(products);
             }
 
             MenuMain();
             ProcessMain();
         }
+
         private static string ConfirmationAddDetails()
         {
             Console.WriteLine("You want to add detail of the invoice?: (y/n)");
             return Console.ReadLine();
         }
+
+        private static void PrintData(object item)
+        {
+            Console.WriteLine($"{item.ToString()}");
+        }
+
+        private static void PrintReportInvoices(Invoices item)
+        {
+            Console.WriteLine($"{item.FullDetails()}");
+        }
+
+        private static void PrintReportInvoiceDetails(InvoiceDetails item)
+        {
+            Console.WriteLine($"{item.FullDetails()}");
+        }
+
+        private static void PrintReportCustomers(Customers item)
+        {
+            Console.WriteLine($"{item.FullDetails()}");
+        }
+
+        private static void PrintReportProducts(Products item)
+        {
+            Console.WriteLine($"{item.FullDetails()}");
+        }
+
         private static void LoadDataDefault()
         {
             Customers customers = new Customers();
@@ -396,10 +457,6 @@ namespace VisualCode
             sellers.IdSeller = 1;
             sellers.Name = "Seller A";
             sellersList.Add(sellers);
-        }
-        private static void PrintData(object item)
-        {
-            Console.WriteLine($"{item.ToString()}");
         }
    }
 }

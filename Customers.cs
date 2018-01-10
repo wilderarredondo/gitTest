@@ -10,5 +10,10 @@ namespace VisualCode.Entities
         {
             return $"{nameof(this.Name)}: {this.Name}   {nameof(this.BirthDate)}: {this.BirthDate}";
         }
+
+        public string FullDetails()
+        {
+            return $"{nameof(this.IdCustomer)}: {this.IdCustomer}   {nameof(this.Name)}: {this.Name}   {nameof(this.BirthDate)}: {this.BirthDate}";
+        }
     }
 }
