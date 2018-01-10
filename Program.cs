@@ -236,7 +236,7 @@ namespace VisualCode
             }
 
             Customers objCustomers = customersList.SingleOrDefault(cliente => cliente.IdCustomer == idCustomer);
-            PrintData(objCustomers);
+            PrintData(objCustomers.ToString());
 
             Console.WriteLine("Id Seller: ");
             if (!int.TryParse(Console.ReadLine(), out int idSeller))
@@ -245,7 +245,7 @@ namespace VisualCode
             }
 
             Sellers objSellers = sellersList.SingleOrDefault(vendedor => vendedor.IdSeller == idSeller);
-            PrintData(objSellers);
+            PrintData(objSellers.ToString());
 
             //get the last ID
             int maxIdInvoice = 1;
@@ -273,7 +273,7 @@ namespace VisualCode
                 }
 
                 Products objProducts = productsList.SingleOrDefault(producto => producto.IdProduct == idProduct);
-                PrintData(objProducts);
+                PrintData(objProducts.ToString());
 
                 Console.WriteLine("Quantity: ");
                 if (!int.TryParse(Console.ReadLine(), out int quantity))
@@ -312,11 +312,11 @@ namespace VisualCode
             invoicesList.ForEach(itemInvoices => {
                 TotalAmount = TotalAmount + itemInvoices.Amount;
 
-                PrintReportInvoices(itemInvoices);
+                PrintData(itemInvoices.FullDetails());
 
                 itemInvoices.InvoiceDetails.ForEach(itemInvoiceDetails =>
                 {
-                    PrintReportInvoiceDetails(itemInvoiceDetails);
+                    PrintData(itemInvoiceDetails.FullDetails());
                 });
             });
 
@@ -335,7 +335,7 @@ namespace VisualCode
 
             foreach(Customers customers in objCustomersList)
             {
-                PrintReportCustomers(customers);
+                PrintData(customers.FullDetails());
             }
 
             MenuMain();
@@ -351,7 +351,7 @@ namespace VisualCode
 
             foreach(Customers customers in objCustomersList)
             {
-                PrintReportCustomers(customers);
+                PrintData(customers.FullDetails());
             }
 
             MenuMain();
@@ -367,7 +367,7 @@ namespace VisualCode
 
             foreach(Products products in objProductsList)
             {
-                PrintReportProducts(products);
+                PrintData(products.FullDetails());
             }
 
             MenuMain();
@@ -380,29 +380,9 @@ namespace VisualCode
             return Console.ReadLine();
         }
 
-        private static void PrintData(object item)
+        private static void PrintData(string item)
         {
-            Console.WriteLine($"{item.ToString()}");
-        }
-
-        private static void PrintReportInvoices(Invoices item)
-        {
-            Console.WriteLine($"{item.FullDetails()}");
-        }
-
-        private static void PrintReportInvoiceDetails(InvoiceDetails item)
-        {
-            Console.WriteLine($"{item.FullDetails()}");
-        }
-
-        private static void PrintReportCustomers(Customers item)
-        {
-            Console.WriteLine($"{item.FullDetails()}");
-        }
-
-        private static void PrintReportProducts(Products item)
-        {
-            Console.WriteLine($"{item.FullDetails()}");
+            Console.WriteLine(item);
         }
 
         private static void LoadDataDefault()
